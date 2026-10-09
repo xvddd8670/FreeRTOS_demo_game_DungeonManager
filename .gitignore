@@ -1,0 +1,11 @@
+build/
+*.elf
+*.hex
+*.bin
+*.o
+*.d
+
+.cache/
+compile_commands.json
+
+# .gdbinit
