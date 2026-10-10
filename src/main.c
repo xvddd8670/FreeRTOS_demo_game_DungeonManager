@@ -61,25 +61,25 @@ static void OledTask(void *p)
 int main(void) {
 
     Log_Init();
+    LOG_INFO("**********************");
+    LOG_INFO("******start main******");
 
-    printf("start main\n");
-
+    LOG_INFO("start HAL init");
     HAL_Init();
 
     __HAL_RCC_GPIOC_CLK_ENABLE();
 
     GPIO_InitTypeDef g = {.Pin = GPIO_PIN_13, .Mode = GPIO_MODE_OUTPUT_PP, .Speed = GPIO_SPEED_FREQ_LOW};
 
-
     HAL_GPIO_Init(GPIOC, &g);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 
     I2C1_Init();
 
-
-    printf("run main while\n");
-    xTaskCreate(LedTask, "led", 128, NULL, 1, NULL);
+    LOG_INFO("create tasks");
+    xTaskCreate(LedTask, "led", 512, NULL, 1, NULL);
     xTaskCreate(OledTask, "oled", 128, NULL, 1, NULL);
+    LOG_INFO("start task scheduler");
     vTaskStartScheduler();
 
 

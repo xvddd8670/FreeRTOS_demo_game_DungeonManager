@@ -8,7 +8,7 @@
 /* Заглушка: сюда позже добавить разбор команд */
 static void CLI_Handle(char *line)
 {
-    LOGI("cmd: '%s'", line);
+    LOG_INFO("cmd: '%s'", line);
 }
 
 void CLI_Task(void *p)
