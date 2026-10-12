@@ -10,6 +10,7 @@ extern uint32_t SystemCoreClock;
 #define configTOTAL_HEAP_SIZE                    (8 * 1024)
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
+#define configUSE_RECURSIVE_MUTEXES              1
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
 #define configUSE_IDLE_HOOK                      0
 #define configUSE_TICK_HOOK                      0

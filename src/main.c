@@ -8,6 +8,7 @@
 #include "dungeon_manager/i2c.h"
 #include "dungeon_manager/ssd1306.h"
 #include "dungeon_manager/log.h"
+#include "dungeon_manager/cli.h"
 
 //void SysTick_Handler(void) { HAL_IncTick(); }
 extern void xPortSysTickHandler(void);
@@ -31,28 +32,6 @@ static void LedTask(void *p)
 }
 
 
-static void OledTask(void *p)
-{
-    OLED_Init();
-    for (uint8_t x = 0; x < 128; x++) OLED_Pixel(x, 32, 1);
-
-    int test_anim_x = 10;
-    int test_anim_y = 10;
-
-    for (;;) {
-        OLED_Clear();
-        test_anim_x += 1;
-        if (test_anim_x >= 128){
-            test_anim_x = 0;
-            test_anim_y += 10;
-        }
-        if (test_anim_y >= 64){test_anim_y = 0;}
-        for (int i=0; i<5; i++){OLED_Pixel(test_anim_x+i, test_anim_y+i, 1);}
-
-        OLED_Update();
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
-}
 
 
 // --------------------------------
@@ -77,8 +56,9 @@ int main(void) {
     I2C1_Init();
 
     LOG_INFO("create tasks");
-    xTaskCreate(LedTask, "led", 512, NULL, 1, NULL);
+    xTaskCreate(LedTask, "led", 128, NULL, 1, NULL);
     xTaskCreate(OledTask, "oled", 128, NULL, 1, NULL);
+    xTaskCreate(CLI_Task, "cli", 512, NULL, 1, NULL);
     LOG_INFO("start task scheduler");
     vTaskStartScheduler();
 
