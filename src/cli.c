@@ -6,13 +6,11 @@
 #include "dungeon_manager/cli.h"
 
 /* Заглушка: сюда позже добавить разбор команд */
-static void CLI_Handle(char *line)
-{
+static void CLI_Handle(char *line) {
     LOG_INFO("cmd: '%s'", line);
 }
 
-void CLI_Task(void *p)
-{
+void CLI_Task(void *p) {
     char line[64];
     uint8_t n = 0;
     char c;

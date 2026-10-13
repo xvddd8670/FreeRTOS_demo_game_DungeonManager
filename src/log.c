@@ -17,15 +17,12 @@ static log_level_t minLevel = LOG_DBG;
 static const char *const tag[] = {"ERROR    ", "WARNING  ", "INFO     ", "DEBUG    "};
 static const char *const color[] = {RTT_CLR_RED, RTT_CLR_YELLOW, RTT_CLR_GREEN, RTT_CLR_BLUE};
 
-/* Единственное место, которое знает про RTT.
-   Для другого вывода (UART, дисплей) меняется только эта функция. */
-static void Backend_Write(const char *s, unsigned n)
-{
+
+static void Backend_Write(const char *s, unsigned n) {
     SEGGER_RTT_Write(0, s, n);
 }
 
-void Log_Init(void)
-{
+void Log_Init(void) {
     SEGGER_RTT_SetFlagsUpBuffer(0, SEGGER_RTT_MODE_NO_BLOCK_SKIP);  // не ждать, если буфер полон
     setvbuf(stdout, NULL, _IONBF, 0);                               // printf без буферизации
 }
@@ -33,8 +30,7 @@ void Log_Init(void)
 void Log_SetLevel(log_level_t lvl) { minLevel = lvl; }
 
 void Log_Write(log_level_t lvl, const char *file, int line, const char *func,
-               const char *fmt, ...)
-{
+               const char *fmt, ...) {
     if (lvl > minLevel) return;
 
     const char *base = strrchr(file, '/');
@@ -56,9 +52,7 @@ void Log_Write(log_level_t lvl, const char *file, int line, const char *func,
     Backend_Write(buf, n);
 }
 
-/* Старые printf() тоже идут в RTT */
-int _write(int fd, char *p, int len)
-{
+int _write(int fd, char *p, int len) {
     (void)fd;
     Backend_Write(p, len);
     return len;
