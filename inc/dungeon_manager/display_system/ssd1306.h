@@ -13,7 +13,33 @@
 #pragma once
 #include <stdint.h>
 
-void OLED_Init(void);
-void OLED_Clear(void);
-void OLED_Pixel(uint8_t x, uint8_t y, uint8_t on);
-void OLED_Update(void);
+
+typedef enum {
+    OLED_BLIT_OR,      // нарисовать (прозрачный фон)
+    OLED_BLIT_XOR,     // инвертировать
+    OLED_BLIT_CLEAR    // стереть там, где в битмапе единицы
+} oled_blit_mode_t;
+
+enum {
+    OLED_PAT_SOLID, OLED_PAT_75, OLED_PAT_50, OLED_PAT_25, OLED_PAT_12,
+    OLED_PAT_HLINES, OLED_PAT_HLINES_WIDE, OLED_PAT_VLINES, OLED_PAT_VLINES_WIDE,
+    OLED_PAT_DIAG_L, OLED_PAT_DIAG_R, OLED_PAT_GRID, OLED_PAT_COUNT
+};
+
+
+extern const uint8_t oled_pat[OLED_PAT_COUNT][8];
+
+
+void oled_init(void);
+void oled_clear(void);
+void oled_update(void);
+//void OLED_Snapshot(void);
+//void OLED_Send(void);
+
+void oled_pixel(uint8_t x, uint8_t y, uint8_t on);
+void oled_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t on);
+void oled_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *pat, uint8_t on);
+void oled_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on);
+void oled_vline(uint8_t x, uint8_t y, uint8_t h, uint8_t on);
+void oled_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on);
+void oled_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, oled_blit_mode_t mode);

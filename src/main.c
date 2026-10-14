@@ -42,6 +42,9 @@ static void test_display_task(void *p) {
         }
         if (test_anim_y >= 64){test_anim_y = 0;}
         for (int i=0; i<5; i++) {display_pixel(test_anim_x+i, test_anim_y+i, 1);}
+
+        display_fill_rect(10, 10, 20, 20, 1);
+        display_line(30, 30, 110, 85, 1);
         vTaskDelay(pdMS_TO_TICKS(50));
     }
 }
