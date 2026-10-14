@@ -3,8 +3,8 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 
-#include "dungeon_manager/i2c.h"
-#include "dungeon_manager/log.h"
+#include "dungeon_manager/periph/i2c.h"
+#include "dungeon_manager/utils/log.h"
 
 static DMA_HandleTypeDef hdma_i2c1_tx;
 static DMA_HandleTypeDef hdma_i2c1_rx;

@@ -2,8 +2,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "SEGGER_RTT.h"
-#include "dungeon_manager/log.h"
-#include "dungeon_manager/cli.h"
+#include "dungeon_manager/utils/log.h"
+#include "dungeon_manager/utils/cli.h"
 
 /* Заглушка: сюда позже добавить разбор команд */
 static void CLI_Handle(char *line) {

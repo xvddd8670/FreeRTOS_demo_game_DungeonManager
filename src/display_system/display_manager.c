@@ -7,7 +7,7 @@
 #include "dungeon_manager/display_system/ssd1306.h"
 #include "dungeon_manager/display_system/display_task.h"
 
-#include "dungeon_manager/log.h"
+#include "dungeon_manager/utils/log.h"
 
 
 static xSemaphoreHandle display_mutex;

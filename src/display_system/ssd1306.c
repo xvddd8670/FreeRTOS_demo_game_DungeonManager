@@ -7,8 +7,8 @@
 
 #include "stm32f1xx_hal.h"
 #include "dungeon_manager/display_system/ssd1306.h"
-#include "dungeon_manager/i2c.h"
-#include "dungeon_manager/log.h"
+#include "dungeon_manager/periph/i2c.h"
+#include "dungeon_manager/utils/log.h"
 
 
 #define OLED_ADDR 0x78

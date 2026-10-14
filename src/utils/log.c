@@ -5,7 +5,7 @@
 #include "stm32f1xx_hal.h"
 #include "SEGGER_RTT.h"
 
-#include "dungeon_manager/log.h"
+#include "dungeon_manager/utils/log.h"
 
 #define RTT_CLR_RESET   "\033[0m"
 #define RTT_CLR_RED     "\033[31m"

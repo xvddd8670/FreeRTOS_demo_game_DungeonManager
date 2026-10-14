@@ -5,12 +5,13 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "dungeon_manager/i2c.h"
+#include "dungeon_manager/periph/i2c.h"
 #include "dungeon_manager/display_system/display_manager.h"
 #include "dungeon_manager/display_system/display_task.h"
-#include "dungeon_manager/log.h"
-#include "dungeon_manager/cli.h"
+#include "dungeon_manager/utils/log.h"
+#include "dungeon_manager/utils/cli.h"
 #include "dungeon_manager/display_system/ssd1306.h"
+#include "dungeon_manager/gfx_system/gfx_draw_test.h"
 
 //void SysTick_Handler(void) { HAL_IncTick(); }
 extern void xPortSysTickHandler(void);
@@ -73,11 +74,12 @@ int main(void) {
 
     LOG_INFO("display init");
     display_manager_init();
+    gfx_draw_test_start();
 
     LOG_INFO("create tasks");
     xTaskCreate(LedTask, "led", 128, NULL, 1, NULL);
     xTaskCreate(CLI_Task, "cli", 512, NULL, 1, NULL);
-    xTaskCreate(test_display_task, "test_d_task", 256, NULL, 1, NULL);
+    // xTaskCreate(test_display_task, "test_d_task", 256, NULL, 1, NULL);
     LOG_INFO("start task scheduler");
     vTaskStartScheduler();
 
