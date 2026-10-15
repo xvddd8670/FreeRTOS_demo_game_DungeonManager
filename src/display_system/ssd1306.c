@@ -208,6 +208,17 @@ void oled_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, o
     }
 }
 
+void oled_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, uint8_t on) {
+    uint8_t stride = (w + 7) / 8;
+    for (uint8_t j = 0; j < h; j++) {
+        for (uint8_t i = 0; i < w; i++) {
+            if (!(bmp[j * stride + i / 8] & (0x80 >> (i & 7)))) continue;
+            int16_t px = x + i, py = y + j;
+            if ((uint16_t)px < OLED_W && (uint16_t)py < OLED_H) oled_pixel(px, py, on);
+        }
+    }
+}
+
 void oled_update(void) {
     memcpy(&fb_dma[1], fb_draw, sizeof(fb_draw));
     I2C1_WriteDMA(OLED_ADDR, fb_dma, sizeof(fb_dma));

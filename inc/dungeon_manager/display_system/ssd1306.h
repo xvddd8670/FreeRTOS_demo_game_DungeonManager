@@ -9,10 +9,12 @@
  * if you take it into your project, you can skip this point
  *
  */
-
 #pragma once
+
 #include <stdint.h>
 
+#define OLED_W 128
+#define OLED_H 64
 
 typedef enum {
     OLED_BLIT_OR,      // нарисовать (прозрачный фон)
@@ -26,9 +28,7 @@ enum {
     OLED_PAT_DIAG_L, OLED_PAT_DIAG_R, OLED_PAT_GRID, OLED_PAT_COUNT
 };
 
-
 extern const uint8_t oled_pat[OLED_PAT_COUNT][8];
-
 
 void oled_init(void);
 void oled_clear(void);
@@ -43,3 +43,4 @@ void oled_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on);
 void oled_vline(uint8_t x, uint8_t y, uint8_t h, uint8_t on);
 void oled_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on);
 void oled_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, oled_blit_mode_t mode);
+void oled_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, uint8_t on);

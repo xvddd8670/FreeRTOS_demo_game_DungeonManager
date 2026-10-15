@@ -17,6 +17,9 @@
 
 #define DISPLAY_W 128
 #define DISPLAY_H 64
+#define DISPLAY_COLOR_BG   0      // фон, "стереть"
+#define DISPLAY_COLOR_FG   1      // основной цвет (на монохроме светится)
+#define DISPLAY_COLOR_NONE 255    // резерв: прозрачный пиксель
 
 typedef enum {
     DISPLAY_BLIT_OR,
@@ -31,6 +34,10 @@ typedef enum {
     DISPLAY_PAT_DIAG_L, DISPLAY_PAT_DIAG_R, DISPLAY_PAT_GRID, DISPLAY_PAT_COUNT
 } display_pattern_t;
 
+typedef uint8_t color_t;
+
+uint16_t display_width(void);
+uint16_t display_height(void);
 
 void need_update_set(void);
 bool need_update_take(TickType_t timeout);
@@ -43,10 +50,11 @@ void display_init(void);
 void display_clear(void);
 void display_update(void);
 
-void display_pixel(uint8_t x, uint8_t y, uint8_t pixel_on_off);
-void display_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t on);
-void display_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, display_pattern_t pat, uint8_t on);
-void display_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on);
-void display_vline(uint8_t x, uint8_t y, uint8_t h, uint8_t on);
-void display_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on);
+void display_pixel(int16_t x, int16_t y, color_t c);
+void display_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, color_t c);
+void display_fill_rect_pat(int16_t x, int16_t y, int16_t w, int16_t h, display_pattern_t pat, color_t c);
+void display_hline(int16_t x, int16_t y, int16_t w, color_t c);
+void display_vline(int16_t x, int16_t y, int16_t h, color_t c);
+void display_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, color_t c);
 void display_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, display_blit_mode_t mode);
+void display_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, color_t c);
