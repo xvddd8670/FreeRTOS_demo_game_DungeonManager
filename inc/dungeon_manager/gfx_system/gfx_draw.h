@@ -4,37 +4,30 @@
 
 #include "dungeon_manager/display_system/display_manager.h"
 
-#ifndef GFX_W
-#define GFX_W 128
-#define GFX_H 64
-#endif
-
-
 typedef enum {
     CMD_RECT, CMD_HLINE, CMD_VLINE, CMD_LINE, CMD_PATTERN,
     CMD_SPRITE, CMD_TEXT, CMD_SHAPE, CMD_COUNT
-} cmd_kind_t;
+} cmd_type_t;
 
 typedef struct {
-    uint8_t kind;                // cmd_kind_t
-    uint8_t on;                  // 1 рисуем, 0 стираем
-    uint8_t hidden;              // 1 = рендер пропускает
+    uint8_t type;                // cmd_kind_t
+    uint8_t color;               // color_t, 0 = фон (стирание)
+    uint8_t hidden;
     union {
-        struct { int16_t x, y; uint8_t w, h; }            rect;      // RECT, HLINE (w), VLINE (h)
+        struct { int16_t x, y, w, h; }                    rect;
         struct { int16_t x0, y0, x1, y1; }                line;
-        struct { int16_t x, y; uint8_t w, h, pat; }       pattern;   // pat = display_pattern_t
+        struct { int16_t x, y, w, h; uint8_t pat; }       pattern;
         struct { int16_t x, y; uint8_t id, frame; }       sprite;
-        struct { int16_t x, y; uint8_t font; const char *str; } text; // строка статическая
+        struct { int16_t x, y; uint8_t font; const char *str; } text;
         struct { int16_t x, y; uint8_t id; }              shape;
-    } p;
+    } payload;
 } gfx_cmd_t;
 
-
-// ресурсы во флеше, данные в страничном формате SSD1306
+// ресурсы во флеше, битмапы 1bpp: по строкам, MSB слева, строка выровнена до байта
 typedef struct {
     uint8_t w, h, frames;
     const uint8_t *img;
-    const uint8_t *mask;         // NULL = без маски
+    const uint8_t *mask;
 } sprite_t;
 
 typedef struct {
@@ -43,7 +36,7 @@ typedef struct {
 } font_t;
 
 typedef struct {
-    uint8_t kind;                // CMD_LINE (a,b,c,d = x0,y0,x1,y1) или CMD_RECT (a,b,c,d = x,y,w,h)
+    uint8_t type;                // CMD_LINE (a,b,c,d = x0,y0,x1,y1) или CMD_RECT (a,b,c,d = x,y,w,h)
     int8_t a, b, c, d;
 } shape_item_t;
 

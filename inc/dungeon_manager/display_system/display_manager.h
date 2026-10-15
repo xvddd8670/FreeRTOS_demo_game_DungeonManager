@@ -15,18 +15,9 @@
 #include "semphr.h"
 
 
-#define DISPLAY_W 128
-#define DISPLAY_H 64
 #define DISPLAY_COLOR_BG   0      // фон, "стереть"
 #define DISPLAY_COLOR_FG   1      // основной цвет (на монохроме светится)
 #define DISPLAY_COLOR_NONE 255    // резерв: прозрачный пиксель
-
-typedef enum {
-    DISPLAY_BLIT_OR,
-    DISPLAY_BLIT_XOR,
-    DISPLAY_BLIT_CLEAR
-} display_blit_mode_t;
-void display_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, display_blit_mode_t mode);
 
 typedef enum {
     DISPLAY_PAT_SOLID, DISPLAY_PAT_75, DISPLAY_PAT_50, DISPLAY_PAT_25, DISPLAY_PAT_12,
@@ -56,5 +47,4 @@ void display_fill_rect_pat(int16_t x, int16_t y, int16_t w, int16_t h, display_p
 void display_hline(int16_t x, int16_t y, int16_t w, color_t c);
 void display_vline(int16_t x, int16_t y, int16_t h, color_t c);
 void display_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, color_t c);
-void display_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, display_blit_mode_t mode);
 void display_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, color_t c);

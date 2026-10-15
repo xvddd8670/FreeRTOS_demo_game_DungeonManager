@@ -7,26 +7,25 @@
 
 
 static const gfx_cmd_t scene[] = {
-    { .kind = CMD_HLINE,   .on = 1, .p.rect    = {0, 0, 128, 0} },
-    { .kind = CMD_HLINE,   .on = 1, .p.rect    = {0, 63, 128, 0} },
-    { .kind = CMD_VLINE,   .on = 1, .p.rect    = {0, 0, 0, 64} },
-    { .kind = CMD_VLINE,   .on = 1, .p.rect    = {127, 0, 0, 64} },
-    { .kind = CMD_PATTERN, .on = 1, .p.pattern = {10, 10, 40, 20, DISPLAY_PAT_50} },
-    { .kind = CMD_LINE,    .on = 1, .p.line    = {60, 10, 120, 55} },
-    { .kind = CMD_SPRITE,  .on = 1, .p.sprite  = {100, 5, SPR_HEART, 0} },
-    { .kind = CMD_TEXT,    .on = 1, .p.text    = {4, 40, FONT_SMALL, "HI"} },
-    { .kind = CMD_SHAPE,   .on = 1, .p.shape   = {70, 20, SHAPE_ARROW} },
+    { .type = CMD_HLINE,   .color = 1, .payload.rect    = {0, 0, 128, 0} },
+    { .type = CMD_HLINE,   .color = 1, .payload.rect    = {0, 63, 128, 0} },
+    { .type = CMD_VLINE,   .color = 1, .payload.rect    = {0, 0, 0, 64} },
+    { .type = CMD_VLINE,   .color = 1, .payload.rect    = {127, 0, 0, 64} },
+    { .type = CMD_PATTERN, .color = 1, .payload.pattern = {10, 10, 40, 20, DISPLAY_PAT_50} },
+    { .type = CMD_LINE,    .color = 1, .payload.line    = {60, 10, 120, 55} },
+    { .type = CMD_SPRITE,  .color = 1, .payload.sprite  = {100, 5, SPR_HEART, 0} },
+    { .type = CMD_TEXT,    .color = 1, .payload.text    = {4, 40, FONT_SMALL, "HI"} },
+    { .type = CMD_SHAPE,   .color = 1, .payload.shape   = {70, 30, SHAPE_ARROW} },
 };
 
-static gfx_cmd_t box = { .kind = CMD_RECT, .on = 1, .p.rect = {0, 50, 8, 8} };
-
+static gfx_cmd_t box = { .type = CMD_RECT, .color = 1, .payload.rect = {0, 50, 8, 8} };
 
 static void gfx_draw_test_task(void *arg) {
     int16_t x = 0, dx = 2;
     for (;;) {
         x += dx;
         if (x < 1 || x > 118) dx = -dx;
-        box.p.rect.x = x;
+        box.payload.rect.x = x;
 
         display_lock();                              // кадр целиком, чтобы display_task не отправил половину
         display_clear();

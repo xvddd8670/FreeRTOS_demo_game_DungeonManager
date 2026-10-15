@@ -117,21 +117,6 @@ void display_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on) {
     need_update_set();
 }
 
-static oled_blit_mode_t to_oled_mode(display_blit_mode_t mode) {
-    switch (mode) {
-    case DISPLAY_BLIT_XOR:   return OLED_BLIT_XOR;
-    case DISPLAY_BLIT_CLEAR: return OLED_BLIT_CLEAR;
-    default:                 return OLED_BLIT_OR;
-    }
-}
-
-void display_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, display_blit_mode_t mode) {
-    display_lock();
-    oled_blit(x, y, w, h, bmp, to_oled_mode(mode));
-    display_unlock();
-    need_update_set();
-}
-
 void display_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, color_t c) {
     display_lock();
     oled_blit_mono(x, y, w, h, bmp, c);

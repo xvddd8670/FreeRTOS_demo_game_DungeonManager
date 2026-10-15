@@ -177,37 +177,6 @@ void oled_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on) {
     }
 }
 
-
-static void apply_byte(uint8_t *dst, uint8_t v, oled_blit_mode_t mode) {
-    if (mode == OLED_BLIT_OR)       *dst |= v;
-    else if (mode == OLED_BLIT_XOR) *dst ^= v;
-    else                            *dst &= ~v;
-}
-
-void oled_blit(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, oled_blit_mode_t mode) {
-    uint8_t pages = (h + 7) / 8;
-    for (uint8_t sp = 0; sp < pages; sp++) {
-        uint8_t src_mask = 0xFF;
-        if (h - sp * 8 < 8) src_mask = (1 << (h - sp * 8)) - 1;   // лишние биты последней страницы
-
-        int16_t dy = y + sp * 8;
-        int16_t page = dy >> 3;
-        uint8_t shift = dy & 7;
-        if (page >= 8 || page < -1) continue;
-
-        for (uint8_t i = 0; i < w; i++) {
-            int16_t dx = x + i;
-            if (dx < 0 || dx >= 128) continue;
-            uint8_t b = bmp[sp * w + i] & src_mask;
-
-            if (page >= 0)
-                apply_byte(&fb_draw[page * 128 + dx], b << shift, mode);
-            if (shift && page + 1 < 8)
-                apply_byte(&fb_draw[(page + 1) * 128 + dx], b >> (8 - shift), mode);
-        }
-    }
-}
-
 void oled_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, uint8_t on) {
     uint8_t stride = (w + 7) / 8;
     for (uint8_t j = 0; j < h; j++) {

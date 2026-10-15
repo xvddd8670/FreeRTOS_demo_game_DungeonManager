@@ -69,6 +69,8 @@ int main(void) {
     HAL_GPIO_Init(GPIOA, &g);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 
+    HAL_Delay(200);
+
     LOG_INFO("I2C init");
     I2C1_Init();
 
