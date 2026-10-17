@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "dungeon_manager/display_system/display_manager.h"
+#include "dungeon_manager/globals/common_types.h"
 
 typedef enum {
     CMD_RECT, CMD_HLINE, CMD_VLINE, CMD_LINE, CMD_PATTERN,
@@ -22,6 +23,12 @@ typedef struct {
         struct { int16_t x, y; uint8_t id; }              shape;
     } payload;
 } gfx_cmd_t;
+
+typedef struct {
+    uint8_t cmds_count;
+    const gfx_cmd_t *cmds;
+    Vector2 ms_coords;
+} Metasprite;
 
 // ресурсы во флеше, битмапы 1bpp: по строкам, MSB слева, строка выровнена до байта
 typedef struct {
@@ -49,4 +56,6 @@ typedef struct {
 // gfx_resources.h (генерируется скриптом) должен дать enum с SPR_COUNT, FONT_COUNT, SHAPE_COUNT
 // и таблицы: extern const sprite_t gfx_sprites[]; font_t gfx_fonts[]; shape_t gfx_shapes[];
 
-void gfx_draw_cmd(const gfx_cmd_t *c);
+//void gfx_draw_cmd(const gfx_cmd_t *c);
+void gfx_draw_metasprite(const Metasprite *metasprite);
+void gfx_draw_one_cmd(const gfx_cmd_t *gfx_cmd, int16_t x, int16_t y);

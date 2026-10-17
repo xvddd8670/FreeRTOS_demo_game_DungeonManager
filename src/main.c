@@ -11,7 +11,7 @@
 #include "dungeon_manager/utils/log.h"
 #include "dungeon_manager/utils/cli.h"
 #include "dungeon_manager/display_system/ssd1306.h"
-#include "dungeon_manager/gfx_system/gfx_draw_test.h"
+#include "dungeon_manager/gfx_system/gfx.h"
 
 //void SysTick_Handler(void) { HAL_IncTick(); }
 extern void xPortSysTickHandler(void);
@@ -76,7 +76,7 @@ int main(void) {
 
     LOG_INFO("display init");
     display_manager_init();
-    gfx_draw_test_start();
+    gfx_system_init();
 
     LOG_INFO("create tasks");
     xTaskCreate(LedTask, "led", 128, NULL, 1, NULL);

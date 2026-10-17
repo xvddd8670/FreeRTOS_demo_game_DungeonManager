@@ -53,9 +53,6 @@ build/startup.o: $(DEV)/Source/Templates/gcc/startup_stm32f103xb.s
 	@mkdir -p $(@D)
 	arm-none-eabi-gcc $(CPU) -c $< -o $@
 
-build:
-	mkdir -p build
-
 flash: build/firmware.elf
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program $< verify reset exit"
 

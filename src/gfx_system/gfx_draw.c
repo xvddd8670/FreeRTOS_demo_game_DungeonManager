@@ -92,7 +92,26 @@ static void (*const draw_fn[CMD_COUNT])(const gfx_cmd_t *) = {
     [CMD_SHAPE]   = draw_shape,
 };
 
-void gfx_draw_cmd(const gfx_cmd_t *gfx_cmd) {
+static void gfx_draw_cmd(const gfx_cmd_t *gfx_cmd) {
     if (gfx_cmd->hidden || gfx_cmd->type >= CMD_COUNT) return;
     draw_fn[gfx_cmd->type](gfx_cmd);
+}
+
+void gfx_draw_metasprite(const Metasprite *metasprite) {
+    for (uint8_t i = 0; i < metasprite->cmds_count; i++){
+        gfx_cmd_t gfx_cmd = metasprite->cmds[i];
+        gfx_cmd.payload.rect.x += metasprite->ms_coords.x;
+        gfx_cmd.payload.rect.y += metasprite->ms_coords.y;
+        if (gfx_cmd.type == CMD_LINE){
+            gfx_cmd.payload.line.x1 += metasprite->ms_coords.x;
+            gfx_cmd.payload.line.y1 += metasprite->ms_coords.y;
+
+        }
+        gfx_draw_cmd(&gfx_cmd);
+    }
+}
+
+void gfx_draw_one_cmd(const gfx_cmd_t *gfx_cmd, int16_t x, int16_t y){
+    Metasprite t = {1, gfx_cmd};
+    gfx_draw_metasprite(&t);
 }
