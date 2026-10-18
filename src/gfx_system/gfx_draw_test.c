@@ -19,13 +19,13 @@ static const gfx_cmd_t scene[] = {
     { .type = CMD_SHAPE,   .color = 1, .payload.shape   = {70, 30, SHAPE_ARROW} },
 };
 
-static const Metasprite scene_ms = {sizeof(scene) / sizeof(scene[0]), scene, (Vector2){.x=0, .y=0}};
+static const metasprite_t scene_ms = {sizeof(scene) / sizeof(scene[0]), scene, (vector2_t){.x=0, .y=0}};
 
 static const gfx_cmd_t knight_cmds[] = {
     { .type = CMD_SPRITE, .color = 1, .payload.sprite = {-4, -4, SPR_HEART, 0} },   // спрайт 8x8, центр в pivot
     { .type = CMD_LINE,   .color = 1, .payload.line   = { 4,  0, 12, 0} },          // линия вправо от pivot
 };
-static const Metasprite knight = {2, knight_cmds, (Vector2){0, 0}};
+static const metasprite_t knight = {2, knight_cmds, (vector2_t){0, 0}};
 
 static const gfx_cmd_t box = { .type = CMD_RECT, .color = 1, .payload.rect = {0, 50, 8, 8} };
 

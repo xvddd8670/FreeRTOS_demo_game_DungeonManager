@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #include "dungeon_manager/utils/static_containers.h"
-#include "dungeon_manager/gfx_system/gfx_draw.h"
+#include "dungeon_manager/gfx_system/gfx_types.h"
 
 
 #ifndef GFX_FRAME_MS
@@ -19,7 +19,7 @@ typedef enum {
     MAIN_MENU
 }QueueOwner;
 
-define_static_map(render_single_queue_map, uint16_t, Metasprite, RENDER_QUEUE_COUNT, uint8_t, cmp_scalar)
+define_static_map(render_single_queue_map, uint16_t, gfx_obj_t, RENDER_QUEUE_COUNT, uint16_t, cmp_scalar)
 extern render_single_queue_map render_queue[QUEUES_OWNER_COUNT];
 
 void gfx_system_init();

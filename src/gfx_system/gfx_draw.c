@@ -97,21 +97,24 @@ static void gfx_draw_cmd(const gfx_cmd_t *gfx_cmd) {
     draw_fn[gfx_cmd->type](gfx_cmd);
 }
 
-void gfx_draw_metasprite(const Metasprite *metasprite) {
-    for (uint8_t i = 0; i < metasprite->cmds_count; i++){
-        gfx_cmd_t gfx_cmd = metasprite->cmds[i];
-        gfx_cmd.payload.rect.x += metasprite->ms_coords.x;
-        gfx_cmd.payload.rect.y += metasprite->ms_coords.y;
-        if (gfx_cmd.type == CMD_LINE){
-            gfx_cmd.payload.line.x1 += metasprite->ms_coords.x;
-            gfx_cmd.payload.line.y1 += metasprite->ms_coords.y;
+void gfx_draw_gfx_obj(const gfx_obj_t *gfx_obj){
+    gfx_draw_metasprite(gfx_obj->metasprite, gfx_obj->coords);
+}
 
+void gfx_draw_metasprite(const metasprite_t *metasprite, vector2_t ms_coords) {
+    for (uint8_t i = 0; i < metasprite->cmds_count; i++){
+        gfx_cmd_t gfx_cmd = metasprite->cmds_arr[i];
+        gfx_cmd.payload.rect.x += ms_coords.x;
+        gfx_cmd.payload.rect.y += ms_coords.y;
+        if (gfx_cmd.type == CMD_LINE){
+            gfx_cmd.payload.line.x1 += ms_coords.x;
+            gfx_cmd.payload.line.y1 += ms_coords.y;
         }
         gfx_draw_cmd(&gfx_cmd);
     }
 }
 
 void gfx_draw_one_cmd(const gfx_cmd_t *gfx_cmd, int16_t x, int16_t y){
-    Metasprite t = {1, gfx_cmd};
-    gfx_draw_metasprite(&t);
+    metasprite_t t = {1, gfx_cmd};
+    gfx_draw_metasprite(&t, (vector2_t){x, y});
 }

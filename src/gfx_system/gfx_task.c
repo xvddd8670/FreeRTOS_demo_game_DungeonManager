@@ -2,6 +2,9 @@
 #include "task.h"
 
 #include "dungeon_manager/gfx_system/gfx.h"
+#include "dungeon_manager/gfx_system/gfx_draw.h"
+#include "dungeon_manager/display_system/display_manager.h"
+
 void gfx_task(void *arg){
     for (;;) {
 
@@ -10,7 +13,7 @@ void gfx_task(void *arg){
         for (uint8_t i = 0; i < QUEUES_OWNER_COUNT; i++){
             render_single_queue_map *single_render_queue = &render_queue[i];
             for (uint8_t o = 0; o < single_render_queue->len; o++){
-                gfx_draw_metasprite(&single_render_queue->items[o].value);
+                gfx_draw_metasprite(single_render_queue->items[o].value.metasprite);
             }
             
         }
