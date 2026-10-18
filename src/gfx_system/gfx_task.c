@@ -13,7 +13,9 @@ void gfx_task(void *arg){
         for (uint8_t i = 0; i < QUEUES_OWNER_COUNT; i++){
             render_single_queue_map *single_render_queue = &render_queue[i];
             for (uint8_t o = 0; o < single_render_queue->len; o++){
-                gfx_draw_metasprite(single_render_queue->items[o].value.metasprite);
+                gfx_draw_metasprite(
+                    single_render_queue->items[o].value.metasprite,
+                    single_render_queue->items[o].value.coords);
             }
             
         }

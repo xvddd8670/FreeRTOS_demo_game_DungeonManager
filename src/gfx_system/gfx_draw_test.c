@@ -42,7 +42,7 @@ static void gfx_draw_test_task(void *arg) {
         // gfx_draw_cmd(&box);
         // gfx_draw_metasprite(&scene_ms, 3, 3);
         gfx_draw_one_cmd(&box, x, 0);
-        gfx_draw_metasprite(&knight);
+        gfx_draw_metasprite(&knight, (vector2_t){0, 0});
         display_unlock();
 
         vTaskDelay(pdMS_TO_TICKS(50));
