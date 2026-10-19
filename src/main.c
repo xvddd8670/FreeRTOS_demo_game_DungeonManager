@@ -13,6 +13,9 @@
 #include "dungeon_manager/display_system/ssd1306.h"
 #include "dungeon_manager/gfx_system/gfx.h"
 
+#include "dungeon_manager/game/game.h"
+
+
 //void SysTick_Handler(void) { HAL_IncTick(); }
 extern void xPortSysTickHandler(void);
 void SysTick_Handler(void) {
@@ -21,12 +24,26 @@ void SysTick_Handler(void) {
         xPortSysTickHandler();
 }
 
+
+void vApplicationMallocFailedHook(void) {
+    LOG_ERROR("malloc failed");
+    LOG_ERROR("free heap=%u", (unsigned)xPortGetFreeHeapSize());
+    for (;;) {}
+}
+
+void vApplicationStackOverflowHook(TaskHandle_t task, char *task_name) {
+    LOG_ERROR("stack overflow: %s", task_name);
+    for (;;) {}
+}
+
+
 static void LedTask(void *p) {
     for (;;) {
         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_8);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
+
 
 static void test_display_task(void *p) {
 
@@ -49,6 +66,7 @@ static void test_display_task(void *p) {
         vTaskDelay(pdMS_TO_TICKS(50));
     }
 }
+
 
 // --------------------------------
 // main
@@ -76,6 +94,9 @@ int main(void) {
 
     LOG_INFO("display init");
     display_manager_init();
+
+    // HAL_Delay(200);
+
     gfx_system_init();
 
     LOG_INFO("create tasks");
@@ -83,6 +104,9 @@ int main(void) {
     xTaskCreate(CLI_Task, "cli", 512, NULL, 1, NULL);
     // xTaskCreate(test_display_task, "test_d_task", 256, NULL, 1, NULL);
     LOG_INFO("start task scheduler");
+
+    game_init();
+
     vTaskStartScheduler();
 
 

@@ -17,6 +17,8 @@ extern uint32_t SystemCoreClock;
 #define configMAX_TASK_NAME_LEN                  16
 #define configUSE_TRACE_FACILITY                 0
 #define configIDLE_SHOULD_YIELD                  1
+#define configUSE_MALLOC_FAILED_HOOK             1
+#define configCHECK_FOR_STACK_OVERFLOW           2
 
 /* У F103 4 бита приоритетов прерываний */
 #define configKERNEL_INTERRUPT_PRIORITY          (15 << 4)
