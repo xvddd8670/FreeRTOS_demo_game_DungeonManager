@@ -6,6 +6,7 @@
 #include "task.h"
 
 #include "dungeon_manager/periph/i2c.h"
+#include "dungeon_manager/periph/keypad.h"
 #include "dungeon_manager/display_system/display_manager.h"
 #include "dungeon_manager/display_system/display_task.h"
 #include "dungeon_manager/utils/log.h"
@@ -96,6 +97,7 @@ int main(void) {
     display_manager_init();
 
     // HAL_Delay(200);
+    keypad_init();
 
     gfx_system_init();
 

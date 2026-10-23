@@ -48,7 +48,7 @@ int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj){
         id_free(gfx_obj_id);
         return -1;
     }
-    LOG_DEBUG("add to render queue ok");
+    LOG_DEBUG("add to render queue ok. id = %d", gfx_obj_id);
     return gfx_obj_id;
 }
 
