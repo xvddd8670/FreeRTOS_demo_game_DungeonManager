@@ -1,14 +1,5 @@
 #include "dungeon_manager/gfx_system/gfx_resources.h"
 
-// сердце 8x8
-
-static const gfx_cmd_t knight_cmds[] = {
-    { .type = CMD_SPRITE, .color = 1, .payload.sprite = {-4, -4, SPR_HEART, 0} },   // спрайт 8x8, центр в pivot
-    { .type = CMD_LINE,   .color = 1, .payload.line   = { 4,  0, 12, 0} },          // линия вправо от pivot
-};
-static const metasprite_t knight = {2, knight_cmds, (vector2_t){30, 30}};
-
-
 static const uint8_t font_small_data[95 * 8] = {
     0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, // ' '
     0x20,0x20,0x20,0x20,0x20,0x00,0x20,0x00, // !
@@ -110,27 +101,3 @@ static const uint8_t font_small_data[95 * 8] = {
 const font_t gfx_fonts[FONT_COUNT] = {
     [FONT_SMALL] = { .w = 5, .h = 8, .first = ' ', .count = 95, .data = font_small_data },
 };
-
-
-// ----------------------
-// shapes
-// ----------------------
-static const shape_item_t arrow_items[] = {
-    {CMD_LINE, 0, 4, 12, 4},
-    {CMD_LINE, 12, 4, 8, 0},
-    {CMD_LINE, 12, 4, 8, 8},
-};
-const shape_t gfx_shapes[SHAPE_COUNT] = {
-    [SHAPE_ARROW] = { .n = 3, .items = arrow_items },
-};
-
-
-// ---------------------------
-// sprites
-// ---------------------------
-static const uint8_t heart_img[8] = {0x66, 0xFF, 0xFF, 0xFF, 0x7E, 0x3C, 0x18, 0x00};
-const sprite_t gfx_sprites[SPR_COUNT] = {
-    [SPR_HEART] = { .w = 8, .h = 8, .frames = 1, .img = heart_img, .mask = NULL },
-};
-
-

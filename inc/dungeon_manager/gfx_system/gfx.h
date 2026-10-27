@@ -31,4 +31,6 @@ extern render_single_queue_map render_queue[QUEUES_OWNER_COUNT];
 
 int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj);
 bool gfx_move_obj_coord_on_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id, vector2_t vector_to_move);
+bool gfx_remove_from_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id);
+vector2_t gfx_get_obj_coords(QueueOwner owner_id, uint16_t gfx_obj_id);
 void gfx_system_init();

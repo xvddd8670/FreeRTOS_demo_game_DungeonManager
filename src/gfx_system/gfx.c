@@ -40,6 +40,7 @@ int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj){
     if (gfx_obj_id == -1){
         return -1;
     }
+    gfx_obj.id = gfx_obj_id;
     gfx_render_queue_lock();
     bool ok = render_single_queue_map_put(&render_queue[owner_id], gfx_obj_id, gfx_obj);
     gfx_render_queue_unlock();
@@ -65,6 +66,10 @@ bool gfx_move_obj_coord_on_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id
     } else {
         return false;
     }
+}
+
+vector2_t gfx_get_obj_coords(QueueOwner owner_id, uint16_t gfx_obj_id){
+    return render_single_queue_map_get(&render_queue[owner_id], gfx_obj_id)->coords;
 }
 
 static const gfx_cmd_t knight_cmds[] = {

@@ -6,10 +6,10 @@
 typedef enum : uint8_t {
     CMD_RECT, CMD_HLINE, CMD_VLINE, CMD_LINE, CMD_PATTERN,
     CMD_SPRITE, CMD_TEXT, CMD_SHAPE, CMD_COUNT
-} cmd_type_e;
+} cmd_type_t;
 
 typedef struct {
-    cmd_type_e type;
+    cmd_type_t type;
     uint8_t color;
     uint8_t hidden;
     union {
