@@ -57,7 +57,7 @@ static void spawn_object(uint8_t entity_id, const metasprite_t *metasprite){
 }
 
 void camera_move(cam_direction_t direction){
-    LOG_DEBUG("camera move");
+    // LOG_DEBUG("camera move");
     vector2_t direction_vec = check_direction(direction);
 
     camera_coords.x += direction_vec.x;

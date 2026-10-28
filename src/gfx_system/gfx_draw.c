@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "dungeon_manager/utils/log.h"
+
 #include "dungeon_manager/display_system/display_manager.h"
 #include "dungeon_manager/gfx_system/gfx_draw.h"
 #include "dungeon_manager/gfx_system/gfx_resources.h"
@@ -102,6 +104,7 @@ void gfx_draw_gfx_obj(const gfx_obj_t *gfx_obj){
 }
 
 void gfx_draw_metasprite(const metasprite_t *metasprite, vector2_t ms_coords) {
+    // LOG_DEBUG("draw metasprite: %d", metasprite->cmds_count);
     for (uint8_t i = 0; i < metasprite->cmds_count; i++){
         gfx_cmd_t gfx_cmd = metasprite->cmds_arr[i];
         gfx_cmd.payload.rect.x += ms_coords.x;

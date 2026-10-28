@@ -52,18 +52,21 @@ int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj){
 }
 
 bool gfx_remove_from_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id){
-    for (size_t i = 0; i < render_queue[owner_id].len; i++) {
-        LOG_DEBUG("%d => %d\n", render_queue[owner_id].items[i].key, render_queue[owner_id].items[i].value);
-    }
+    // LOG_DEBUG("remove from render queue");
+    // LOG_DEBUG("count before: %d", render_queue[owner_id].len);
 
     bool remove_succes = render_single_queue_map_remove(&render_queue[owner_id], gfx_obj_id);
     if (remove_succes){
         id_free(gfx_obj_id);
     }
 
-    for (size_t i = 0; i < render_queue[owner_id].len; i++) {
-        LOG_DEBUG("%d => %d\n", render_queue[owner_id].items[i].key, render_queue[owner_id].items[i].value);
-    }
+    // LOG_DEBUG("count after: %d", render_queue[owner_id].len);
+
+    // if (render_queue[owner_id].len == 0){
+    //     display_clear();
+    //     display_update();
+    // }
+    //
     return remove_succes;
 }
 

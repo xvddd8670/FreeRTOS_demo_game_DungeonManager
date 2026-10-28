@@ -26,6 +26,7 @@ void gfx_task(void *arg){
             }
             
         }
+        display_update();
 
         display_unlock();
         gfx_render_queue_unlock();

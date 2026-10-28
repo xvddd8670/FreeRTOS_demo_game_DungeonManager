@@ -56,6 +56,7 @@ static void oled_write_cmd(uint8_t cmd) {
 
 void oled_clear(void) {
     memset(fb_draw, 0, sizeof(fb_draw));
+    // I2C1_WriteDMA(OLED_ADDR, fb_dma, sizeof(fb_dma));
 }
 
 void oled_init(void) {
@@ -71,6 +72,7 @@ void oled_init(void) {
     for (uint8_t i = 0; i < sizeof(seq); i++) oled_write_cmd(seq[i]);
     fb_dma[0] = 0x40;                  // control byte, один раз
     oled_clear();
+    oled_update();
 }
 
 void oled_pixel(uint8_t x, uint8_t y, uint8_t on) {

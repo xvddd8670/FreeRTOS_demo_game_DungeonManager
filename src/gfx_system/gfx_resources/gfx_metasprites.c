@@ -8,6 +8,7 @@ static const gfx_cmd_t knight_prefab[] = {
 
 static const gfx_cmd_t ground_prefab[] = {
     { .type = CMD_PATTERN, .color = 1, .payload.pattern = { .x=(-8), .y=(-8), .w=16, .h=16, .pat=2} },
+    // { .type = CMD_RECT, .color = 1, .payload.pattern = { .x=(-8), .y=(-8), .w=16, .h=16} },
     { .type = CMD_LINE,   .color = 1, .payload.line   = { -8, -8, 7, -8} },          // линия вправо от pivot
     { .type = CMD_LINE,   .color = 1, .payload.line   = { -8, -8, -8, 7} },          // линия вправо от pivot
     { .type = CMD_LINE,   .color = 1, .payload.line   = { 8, 8, -8, 8} },          // линия вправо от pivot
