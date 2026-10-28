@@ -12,6 +12,7 @@
 
 
 #define OLED_ADDR 0x78
+#define OLED_MARGIN 16
 
 
 extern I2C_HandleTypeDef hi2c1;
@@ -84,12 +85,41 @@ void oled_pixel(uint8_t x, uint8_t y, uint8_t on) {
 
 
 // заливка с узором: бит узора 1 = рисовать цвет on, 0 = не трогать
-void oled_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *pat, uint8_t on) {
-    if (x >= 128 || y >= 64 || !w || !h) return;
+// void oled_fill_rect_pat(int16_t x, int16_t y, int16_t w, int16_t h, const uint8_t *pat, uint8_t on) {
+//     LOG_DEBUG("%d, %d", x, y);
+//     if (x >= 128 || y >= 64 || !w || !h) return;
+//     if (x + w > 128) w = 128 - x;
+//     if (y + h > 64)  h = 64 - y;
+//
+//     uint8_t end = y + h;
+//     while (y < end) {
+//         uint8_t top = y % 8;
+//         uint8_t rows = 8 - top;
+//         if (rows > end - y) rows = end - y;
+//         uint8_t mask = (uint8_t)(((1 << rows) - 1) << top);
+//
+//         uint8_t *p = &fb_draw[(y / 8) * 128 + x];
+//         for (uint8_t i = 0; i < w; i++) {
+//             uint8_t bits = pat[(x + i) & 7] & mask;
+//             if (on) p[i] |= bits;
+//             else    p[i] &= ~bits;
+//         }
+//         y += rows;
+//     }
+// }
+
+
+void oled_fill_rect_pat(int16_t x, int16_t y, int16_t w, int16_t h, const uint8_t *pat, uint8_t on) {
+    if (w <= 0 || h <= 0) return;
+    if (x < -OLED_MARGIN || y < -OLED_MARGIN || x >= 128 + OLED_MARGIN || y >= 64 + OLED_MARGIN) return;
+
+    if (x < 0) { w += x; x = 0; }
+    if (y < 0) { h += y; y = 0; }
     if (x + w > 128) w = 128 - x;
     if (y + h > 64)  h = 64 - y;
+    if (w <= 0 || h <= 0) return;
 
-    uint8_t end = y + h;
+    int16_t end = y + h;
     while (y < end) {
         uint8_t top = y % 8;
         uint8_t rows = 8 - top;
@@ -97,7 +127,7 @@ void oled_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
         uint8_t mask = (uint8_t)(((1 << rows) - 1) << top);
 
         uint8_t *p = &fb_draw[(y / 8) * 128 + x];
-        for (uint8_t i = 0; i < w; i++) {
+        for (int16_t i = 0; i < w; i++) {
             uint8_t bits = pat[(x + i) & 7] & mask;
             if (on) p[i] |= bits;
             else    p[i] &= ~bits;
@@ -106,12 +136,12 @@ void oled_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     }
 }
 
-void oled_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t on) {
+void oled_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t on) {
     oled_fill_rect_pat(x, y, w, h, oled_pat[OLED_PAT_SOLID], on);
 }
 
 
-void oled_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on) {
+void oled_hline(int16_t x, int16_t y, int16_t w, uint8_t on) {
     if (x >= 128 || y >= 64 || !w) return;
     if (x + w > 128) w = 128 - x;
     uint8_t *p = &fb_draw[(y >> 3) * 128 + x];
@@ -124,7 +154,7 @@ void oled_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on) {
     }
 }
 
-void oled_vline(uint8_t x, uint8_t y, uint8_t h, uint8_t on) {
+void oled_vline(int16_t x, int16_t y, int16_t h, uint8_t on) {
     if (x >= 128 || y >= 64 || !h) return;
     if (y + h > 64) h = 64 - y;
     uint8_t *p = &fb_draw[(y >> 3) * 128 + x];

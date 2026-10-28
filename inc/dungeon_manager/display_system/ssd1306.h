@@ -31,9 +31,9 @@ void oled_update(void);
 //void OLED_Send(void);
 
 void oled_pixel(uint8_t x, uint8_t y, uint8_t on);
-void oled_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t on);
-void oled_fill_rect_pat(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *pat, uint8_t on);
-void oled_hline(uint8_t x, uint8_t y, uint8_t w, uint8_t on);
-void oled_vline(uint8_t x, uint8_t y, uint8_t h, uint8_t on);
+void oled_fill_rect(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t on);
+void oled_fill_rect_pat(int16_t x, int16_t y, int16_t w, int16_t h, const uint8_t *pat, uint8_t on);
+void oled_hline(int16_t x, int16_t y, int16_t w, uint8_t on);
+void oled_vline(int16_t x, int16_t y, int16_t h, uint8_t on);
 void oled_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t on);
 void oled_blit_mono(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp, uint8_t on);
