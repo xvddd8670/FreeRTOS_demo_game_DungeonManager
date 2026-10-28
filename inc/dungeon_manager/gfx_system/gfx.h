@@ -17,6 +17,8 @@
 #define RENDER_QUEUE_COUNT 64
 #define QUEUES_OWNER_COUNT 2
 
+#define GFX_OBJ_ID_RESET -1
+
 typedef enum {
     GAME,
     MAIN_MENU

@@ -7,6 +7,7 @@
 #define GAME_GFX_ID 0
 
 #define MAX_ENTITIES 128
+#define MASK_EMPTY 0
 #define FLOOR_W 11
 #define FLOOR_H 11
 
@@ -52,7 +53,7 @@ extern elevator_component elevator_components[MAX_ENTITIES];
 typedef struct{
     vector2_t coord;
     uint8_t floor;
-    uint8_t gfx_obj_id;
+    int8_t gfx_obj_id;
 } tile_component;
 extern tile_component tile_components[MAX_ENTITIES];
 

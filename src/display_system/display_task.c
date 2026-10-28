@@ -6,6 +6,7 @@
 void display_task(void *p) {
     display_init();
     vTaskDelay(pdMS_TO_TICKS(100));
+    display_clear();
 
     for (;;) {
         need_update_take(portMAX_DELAY);

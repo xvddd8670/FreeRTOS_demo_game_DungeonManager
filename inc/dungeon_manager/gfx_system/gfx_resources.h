@@ -6,7 +6,7 @@
 enum { SPR_HEART, SPR_COUNT };
 enum { FONT_SMALL, FONT_COUNT };
 enum { SHAPE_ARROW, SHAPE_COUNT };
-enum { KNIGHT_MS, METASPRITE_COUNT };
+enum { KNIGHT_MS, GROUND_MS, METASPRITE_COUNT };
 
 extern const sprite_t     gfx_sprites[SPR_COUNT];
 extern const font_t       gfx_fonts[FONT_COUNT];

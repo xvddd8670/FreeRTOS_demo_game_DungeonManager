@@ -9,6 +9,9 @@
 
 
 void gfx_task(void *arg){
+    display_lock();
+    display_clear();
+    display_unlock();
     for (;;) {
 
         gfx_render_queue_lock();

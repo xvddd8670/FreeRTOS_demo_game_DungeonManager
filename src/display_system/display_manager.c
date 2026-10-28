@@ -129,10 +129,3 @@ void display_update(void) {
     oled_update();
     display_unlock();
 }
-
-// void display_update(void) {
-//     display_lock();
-//     OLED_Snapshot();
-//     display_unlock();
-//     OLED_Send();
-// }

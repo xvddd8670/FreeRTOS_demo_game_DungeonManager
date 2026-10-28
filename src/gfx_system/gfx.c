@@ -9,8 +9,7 @@
 render_single_queue_map render_queue[QUEUES_OWNER_COUNT];
 xSemaphoreHandle render_queue_mutex;
 
-static uint32_t ids_pool[8];
-
+static uint32_t ids_pool[8];// = {1};
 
 int16_t get_free_id(void){
     for (uint8_t w = 0; w < 8; w++){
@@ -24,6 +23,7 @@ int16_t get_free_id(void){
 }
 
 void id_free(uint8_t id){
+    // if (id == 0) return;
     ids_pool[id / 32] &= ~((uint32_t)1 << (id % 32));
 }
 
@@ -35,8 +35,7 @@ void gfx_render_queue_unlock(void){
 }
 
 int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj){
-    LOG_DEBUG("add to render queue");
-    uint16_t gfx_obj_id = get_free_id();
+    int16_t gfx_obj_id = get_free_id();
     if (gfx_obj_id == -1){
         return -1;
     }
@@ -49,12 +48,23 @@ int16_t gfx_add_to_render_queue(QueueOwner owner_id, gfx_obj_t gfx_obj){
         id_free(gfx_obj_id);
         return -1;
     }
-    LOG_DEBUG("add to render queue ok. id = %d", gfx_obj_id);
     return gfx_obj_id;
 }
 
 bool gfx_remove_from_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id){
-    return render_single_queue_map_remove(&render_queue[owner_id], gfx_obj_id);
+    for (size_t i = 0; i < render_queue[owner_id].len; i++) {
+        LOG_DEBUG("%d => %d\n", render_queue[owner_id].items[i].key, render_queue[owner_id].items[i].value);
+    }
+
+    bool remove_succes = render_single_queue_map_remove(&render_queue[owner_id], gfx_obj_id);
+    if (remove_succes){
+        id_free(gfx_obj_id);
+    }
+
+    for (size_t i = 0; i < render_queue[owner_id].len; i++) {
+        LOG_DEBUG("%d => %d\n", render_queue[owner_id].items[i].key, render_queue[owner_id].items[i].value);
+    }
+    return remove_succes;
 }
 
 bool gfx_move_obj_coord_on_render_queue(QueueOwner owner_id, uint16_t gfx_obj_id, vector2_t vector_to_move){
@@ -76,7 +86,7 @@ static const gfx_cmd_t knight_cmds[] = {
     { .type = CMD_SPRITE, .color = 1, .payload.sprite = {-4, -4, SPR_HEART, 0} },   // спрайт 8x8, центр в pivot
     { .type = CMD_LINE,   .color = 1, .payload.line   = { 4,  0, 12, 0} },          // линия вправо от pivot
 };
-static const metasprite_t knight = {2, knight_cmds, (vector2_t){30, 30}};
+static const metasprite_t knight = {2, knight_cmds};
 gfx_obj_t knight_gfx_obj = {0, &knight, (vector2_t){110, 35}};
 
 void gfx_system_init(){
